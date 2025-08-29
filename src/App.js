@@ -10,6 +10,12 @@ function App() {
   const[emailUser, setEmailUser] = useState('')
   const[ageUser, setAgeUser] = useState(0)
 
+  //listas de tarefas 
+  const [task, setTask] = useState([
+    "fazer janta de sexta a noite", 
+    "fazer um bolinho" 
+  ])
+  const [input,setInput] = useState('')
   const [user, setUser] = useState({})
 
   function changeNameHook(name){
@@ -27,6 +33,13 @@ function App() {
       })
   }
   
+  function handleTask(e){
+    e.preventDefault()
+    
+    //  alert("Entrou no handle task")
+    setTask([...task, input])
+  }
+
   //sempre que utilizamos useState passamos a variavel e o evento que iramos setar essa variavel 
   // o evento que que vamos chamar essa variavel sempre  definimos atraves de uma função 
   // essa função é chamada dentro de um evento onLoad 
@@ -80,6 +93,19 @@ function App() {
             <span>Idade é {user.age}</span> <br/>
 
         </div>
+
+        <br/> <br/>
+        <h3>Lista de Tarefas</h3>
+        <form onSubmit={handleTask}>
+          <label>Atribua uma tarefa para lista</label>
+          <input value={input} onChange={(e)=>{setInput(e.target.value)}} type="text"/>
+          <button type="submit">Enviar</button>
+        </form>
+      <ul>
+        {task.map((task, index) => (
+          <li key={index}>{task}</li>
+        ))}
+      </ul>
     </div>
   );
 }
