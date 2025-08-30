@@ -1,6 +1,6 @@
 import Idade from "./components/Idade";
-import {useState} from 'react'; 
-import { useEffect } from "react";
+import {useState, useEffect} from 'react'; 
+
 import React from "react";
 function App() {
   //useState é um hook para adicionar dinamismo na app 
@@ -43,6 +43,22 @@ function App() {
    useEffect(() => {
     console.log("Tasks atualizadas:", task);
   }, [task]);
+
+  //quando a pagina carregar 
+  useEffect(()=>{
+     let  getTask = localStorage.getItem("@task")
+     if(getTask)
+     {
+        setTask(JSON.parse(getTask))
+     }
+
+  }, [])
+
+  //salvar no localStorage 
+
+   useEffect(()=>{
+      localStorage.setItem("@task", JSON.stringify(task))
+  }, [task])
 
   //sempre que utilizamos useState passamos a variavel e o evento que iramos setar essa variavel 
   // o evento que que vamos chamar essa variavel sempre  definimos atraves de uma função 
