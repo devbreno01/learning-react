@@ -1,6 +1,6 @@
 import Idade from "./components/Idade";
 import {useState} from 'react'; 
-
+import { useEffect } from "react";
 import React from "react";
 function App() {
   //useState é um hook para adicionar dinamismo na app 
@@ -11,10 +11,7 @@ function App() {
   const[ageUser, setAgeUser] = useState(0)
 
   //listas de tarefas 
-  const [task, setTask] = useState([
-    "fazer janta de sexta a noite", 
-    "fazer um bolinho" 
-  ])
+  const [task, setTask] = useState([])
   const [input,setInput] = useState('')
   const [user, setUser] = useState({})
 
@@ -37,8 +34,15 @@ function App() {
     e.preventDefault()
     
     //  alert("Entrou no handle task")
+    
     setTask([...task, input])
+    //console.log(task)
   }
+
+  //useEffect = "faça isso quando algo mudar", no caso o array .
+   useEffect(() => {
+    console.log("Tasks atualizadas:", task);
+  }, [task]);
 
   //sempre que utilizamos useState passamos a variavel e o evento que iramos setar essa variavel 
   // o evento que que vamos chamar essa variavel sempre  definimos atraves de uma função 
@@ -100,7 +104,11 @@ function App() {
           <label>Atribua uma tarefa para lista</label>
           <input value={input} onChange={(e)=>{setInput(e.target.value)}} type="text"/>
           <button type="submit">Enviar</button>
+         
         </form>
+         <button onClick={() => setTask(task.slice(0, -1))}>
+            Remove
+          </button>
       <ul>
         {task.map((task, index) => (
           <li key={index}>{task}</li>
